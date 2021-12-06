@@ -1,14 +1,14 @@
 package com.cooperativism.voting.exception;
 
-public class ScheduleNotFound extends RuntimeException{
+public class ScheduleNotFoundException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
-    public ScheduleNotFound(String msg) {
+    public ScheduleNotFoundException(String msg) {
         super(msg);
     }
 
-    public ScheduleNotFound(String msg, Throwable cause) {
+    public ScheduleNotFoundException(String msg, Throwable cause) {
         super(msg, cause);
     }
 

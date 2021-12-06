@@ -1,6 +1,6 @@
 package com.cooperativism.voting.exception;
 
-public class DataIntegrityViolationException {
+public class DataIntegrityException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
@@ -11,5 +11,5 @@ public class DataIntegrityViolationException {
     public DataIntegrityException(String msg, Throwable cause) {
         super(msg, cause);
     }
-    
+
 }
