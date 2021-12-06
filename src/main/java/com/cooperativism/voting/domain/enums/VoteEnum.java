@@ -1,2 +1,5 @@
-package com.cooperativism.voting.domain.enums;public enum VoteEnum {
+package com.cooperativism.voting.domain.enums;
+
+public enum VoteEnum {
+    SIM, NAO
 }
