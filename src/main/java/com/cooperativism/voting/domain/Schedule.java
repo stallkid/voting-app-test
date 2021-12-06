@@ -1,6 +1,5 @@
 package com.cooperativism.voting.domain;
 
-import com.mongodb.lang.NonNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -27,4 +26,5 @@ public class Schedule {
     private LocalDateTime createdDate;
     private LocalDateTime endDate;
     private List<Votes> votes;
+    private VoteResults voteResults;
 }

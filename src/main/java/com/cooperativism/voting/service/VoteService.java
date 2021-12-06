@@ -3,7 +3,6 @@ package com.cooperativism.voting.service;
 import com.cooperativism.voting.client.CpfValidatorClient;
 import com.cooperativism.voting.client.CpfValidatorEnum;
 import com.cooperativism.voting.client.response.CpfValidatorResponse;
-import com.cooperativism.voting.controller.response.VoteResponse;
 import com.cooperativism.voting.domain.Schedule;
 import com.cooperativism.voting.domain.Votes;
 import com.cooperativism.voting.exception.DataIntegrityException;
@@ -31,7 +30,5 @@ public class VoteService {
         if (alreadyVoted) throw new DataIntegrityException("Schedule already has this vote");
         scheduleService.registerAssociateVote(vote, scheduleId);
     }
-
-
 
 }

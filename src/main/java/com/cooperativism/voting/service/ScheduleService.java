@@ -2,28 +2,21 @@ package com.cooperativism.voting.service;
 
 import com.cooperativism.voting.controller.response.VoteResponse;
 import com.cooperativism.voting.domain.Schedule;
+import com.cooperativism.voting.domain.VoteResults;
 import com.cooperativism.voting.domain.Votes;
+import com.cooperativism.voting.domain.enums.VoteEnum;
 import com.cooperativism.voting.exception.DataIntegrityException;
 import com.cooperativism.voting.exception.ScheduleNotFoundException;
 import com.cooperativism.voting.mapper.VotesMapper;
 import com.cooperativism.voting.repository.ScheduleRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mongodb.BasicDBObject;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -106,14 +99,29 @@ public class ScheduleService {
         } else {
             schedule.getVotes().add(vote);
         }
+        schedule.setVoteResults(sumScheduleVote(schedule.getVoteResults(), vote));
         repository.save(schedule);
     }
 
+    public VoteResults sumScheduleVote(VoteResults voteResults, Votes vote) {
+        if (voteResults == null) {
+            if (vote.getVote().equals(VoteEnum.SIM)) {
+                return new VoteResults(1L, 0L);
+            }
+            return new VoteResults(0L, 1L);
+        }
+        if (vote.getVote().equals(VoteEnum.SIM)) {
+            voteResults.setYesVotes(voteResults.getYesVotes() + 1);
+        } else {
+            voteResults.setNoVotes(voteResults.getNoVotes() + 1);
+        }
+        return voteResults;
+    }
+
     public VoteResponse countingVotes(final String scheduleId) {
-//        VoteResponse result = votesMapper.toVoteResponse(jsonResult.getUniqueMappedResult());
-        AggregationResults<Schedule> result = repository.countAllVotes(scheduleId);
-//        VoteResponse voteResponse = votesMapper.toVoteResponse((result));
-        return null;
+        VoteResponse result = votesMapper.toVoteResponse(getScheduleById(scheduleId));
+        result.setTotalVotesCount(result.getTotalVotesForYesCount() + result.getTotalVotesForNoCount());
+        return result;
     }
 
 }
