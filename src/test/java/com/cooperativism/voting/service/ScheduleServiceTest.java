@@ -3,6 +3,7 @@ package com.cooperativism.voting.service;
 import com.cooperativism.voting.domain.Schedule;
 import com.cooperativism.voting.domain.Votes;
 import com.cooperativism.voting.domain.enums.VoteEnum;
+import com.cooperativism.voting.mapper.VotesMapper;
 import com.cooperativism.voting.repository.ScheduleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,8 @@ class ScheduleServiceTest {
 
     @Mock
     ScheduleRepository repository;
+    @Mock
+    VotesMapper votesMapper;
 
     @InjectMocks
     ScheduleService scheduleService;
@@ -40,7 +43,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void getAllSchedules() {
+    void shouldGetAllSchedules() {
         final Schedule scheduleOne = new Schedule("135adgadgade311", "test1", "test1 desc", LocalDateTime.now(), null, null, null);
         final Schedule scheduleTwo = new Schedule("135adgadgade312", "test2", "test2 desc", LocalDateTime.now(), null, null, null);
         final Schedule scheduleThree = new Schedule("135adgadgade313", "test3", "test3 desc", LocalDateTime.now(), null, null, null);
@@ -54,7 +57,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void getScheduleByName() {
+    void shouldGetScheduleByName() {
         final String name = "test";
         final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
 
@@ -66,7 +69,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void getScheduleById() {
+    void shouldGetScheduleById() {
         final String id = "123";
         final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
 
@@ -78,7 +81,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void updateSchedule() {
+    void shouldUpdateSchedule() {
         final String id = "123";
         final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
 
@@ -92,7 +95,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void deleteSchedule() {
+    void shouldDeleteSchedule() {
         final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
 
         Mockito.when(repository.findById(schedule.getId())).thenReturn(Optional.of(schedule));
@@ -103,7 +106,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void openSchedule() {
+    void shouldOpenSchedule() {
         final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null);
 
         Mockito.when(repository.findById(schedule.getId())).thenReturn(Optional.of(schedule));
@@ -115,7 +118,7 @@ class ScheduleServiceTest {
     }
 
     @Test
-    void registerAssociateVote() {
+    void shouldRegisterAssociateVote() {
         final Votes vote = new Votes("1234567", VoteEnum.SIM);
         final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null);
 

@@ -11,7 +11,6 @@ import com.cooperativism.voting.mapper.VotesMapper;
 import com.cooperativism.voting.repository.ScheduleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,8 +20,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class ScheduleService {
-
-    MongoTemplate mongoTemplate;
 
     @Autowired
     private ScheduleRepository repository;
@@ -104,6 +101,7 @@ public class ScheduleService {
     }
 
     public VoteResults sumScheduleVote(VoteResults voteResults, Votes vote) {
+        log.info("Adding vote count to the database");
         if (voteResults == null) {
             if (vote.getVote().equals(VoteEnum.SIM)) {
                 return new VoteResults(1L, 0L);
@@ -119,8 +117,10 @@ public class ScheduleService {
     }
 
     public VoteResponse countingVotes(final String scheduleId) {
+        log.info("Fetching votes for schedule with id: {}", scheduleId);
         VoteResponse result = votesMapper.toVoteResponse(getScheduleById(scheduleId));
         result.setTotalVotesCount(result.getTotalVotesForYesCount() + result.getTotalVotesForNoCount());
+        log.info("Votes result: {}", result);
         return result;
     }
 
