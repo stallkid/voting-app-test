@@ -2,11 +2,13 @@ package com.cooperativism.voting.controller;
 
 import com.cooperativism.voting.controller.request.OpenScheduleRequest;
 import com.cooperativism.voting.controller.request.ScheduleRequest;
+import com.cooperativism.voting.controller.request.VoteRequest;
 import com.cooperativism.voting.controller.response.VoteResponse;
 import com.cooperativism.voting.domain.Schedule;
 import com.cooperativism.voting.mapper.ScheduleMapper;
+import com.cooperativism.voting.mapper.VotesMapper;
 import com.cooperativism.voting.service.ScheduleService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.cooperativism.voting.service.VoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,7 +26,11 @@ public class ScheduleController {
     @Autowired
     private ScheduleService service;
     @Autowired
+    private VoteService voteService;
+    @Autowired
     private ScheduleMapper mapper;
+    @Autowired
+    private VotesMapper votesMapper;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +81,17 @@ public class ScheduleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/votes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/vote",consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> voteOnScheduleSession(
+            @RequestBody final VoteRequest request
+    ) {
+        log.info("Associate started to voting: {}",request);
+        voteService.voteForSchedule(request.getScheduleId(), votesMapper.toVotes(request));
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/vote/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VoteResponse> votesCount(@PathVariable String id) {
         VoteResponse voteResponse = service.countingVotes(id);
         return ResponseEntity.ok().body(voteResponse);
