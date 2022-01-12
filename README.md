@@ -10,11 +10,19 @@ Após a criação e abertura da Pauta, será possível realizar votações com C
 
 É possível consultar a votação a qualquer momento através da API de consulta.
 
+## Escolhas tomadas durante o desenvolvimento
+A aplicação foi desenvolvida tendo em mente agilidade e performance, com Spring boot foi possível ter várias ferramentas prontas para o uso.
+No eco sistema do Spring a ferramenta mais utilizada foi o Spring Data, pois ele abstrai todas as funcionalidades do JPA Hibernate.
+Para o banco de dados foi escolhido o MongoDB, por ser NoSQL não foi preciso um tempo maior para o desenho dos esquemas do banco de dados, assim ganhando bastante tempo em apenas desenhando o JSON pelo qual o Frontend utilizaria, alem da grande performance por não precisar fazer buscas e várias indexações durante o uso.
+A documentação foi feita com Swagger por ser uma lib bem robusta e ter uma ótima integração com o Springboot.
+A mensageria escolhida foi o RabbitMQ hospedado num servidor AWS por meio da plataforma CloudAMQP pelo fato de ser gratuito e não precisar utilizar o cartão de crédito.
+Para o versionamento da aplicação seria utilizado o git flow caso ouvesse um time maior, para ter um melhor controle nos merges, mas para focar na agilidade foi feito apenas commits únicos por funcionalidades aplicadas diretamente na branch main.
+
 ## Stack de tecnologias
 Para o desenvolvimento foi utilizado as seguintes tecnologias
 - [Spring boot](https://spring.io/projects/spring-boot) 2.4.3
 - [MongoDB](https://www.mongodb.com/) 4.4
 - [CloudAMQP](https://www.cloudamqp.com/)
 
-### Links para a aplicação
+### Link para a aplicação
 [https://coop-voting-app.herokuapp.com/swagger-ui.html](https://coop-voting-app.herokuapp.com/swagger-ui.html)
