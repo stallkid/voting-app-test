@@ -1,0 +1,24 @@
+server:
+  port: ${PORT:8081}
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://mongo:123@localhost:27017/cooperativism-voting}
+#      host: ${DB-HOST:localhost}
+#      port: ${DB-PORT:27017}
+#      database: ${DB-NAME:cooperativism-voting}
+#      username: ${DB-USER:mongo}
+#      password: ${DB-PASSWORD:123}
+      auto-index-creation: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    queue:
+      name: closed-schedule-vote-results
+client:
+  service:
+    cpf: https://user-info.herokuapp.com/users/
+scheduler:
+  enabled: true
