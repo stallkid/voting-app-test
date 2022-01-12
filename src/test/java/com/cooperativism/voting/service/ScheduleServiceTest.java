@@ -28,11 +28,11 @@ class ScheduleServiceTest {
     VotesMapper votesMapper;
 
     @InjectMocks
-    ScheduleService scheduleService;
+    ScheduleServiceImpl scheduleService;
 
     @Test
     void shouldCreateScheduleSuccessfully() {
-        final Schedule schedule = new Schedule(null,"test", "testDesc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule(null,"test", "testDesc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.save(schedule)).thenReturn(schedule);
 
@@ -44,9 +44,9 @@ class ScheduleServiceTest {
 
     @Test
     void shouldGetAllSchedules() {
-        final Schedule scheduleOne = new Schedule("135adgadgade311", "test1", "test1 desc", LocalDateTime.now(), null, null, null);
-        final Schedule scheduleTwo = new Schedule("135adgadgade312", "test2", "test2 desc", LocalDateTime.now(), null, null, null);
-        final Schedule scheduleThree = new Schedule("135adgadgade313", "test3", "test3 desc", LocalDateTime.now(), null, null, null);
+        final Schedule scheduleOne = new Schedule("135adgadgade311", "test1", "test1 desc", LocalDateTime.now(), null, null, null, false);
+        final Schedule scheduleTwo = new Schedule("135adgadgade312", "test2", "test2 desc", LocalDateTime.now(), null, null, null, false);
+        final Schedule scheduleThree = new Schedule("135adgadgade313", "test3", "test3 desc", LocalDateTime.now(), null, null, null, false);
         List<Schedule> schedules = List.of(scheduleOne, scheduleTwo, scheduleThree);
 
         Mockito.when(repository.findAll()).thenReturn(schedules);
@@ -59,7 +59,7 @@ class ScheduleServiceTest {
     @Test
     void shouldGetScheduleByName() {
         final String name = "test";
-        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findScheduleByName(name)).thenReturn(Optional.of(schedule));
 
@@ -71,7 +71,7 @@ class ScheduleServiceTest {
     @Test
     void shouldGetScheduleById() {
         final String id = "123";
-        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(schedule));
 
@@ -83,7 +83,7 @@ class ScheduleServiceTest {
     @Test
     void shouldUpdateSchedule() {
         final String id = "123";
-        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(schedule));
         Mockito.when(repository.save(schedule)).thenReturn(schedule);
@@ -96,7 +96,7 @@ class ScheduleServiceTest {
 
     @Test
     void shouldDeleteSchedule() {
-        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123", "test", "test desc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findById(schedule.getId())).thenReturn(Optional.of(schedule));
         scheduleService.deleteSchedule(schedule.getId());
@@ -107,7 +107,7 @@ class ScheduleServiceTest {
 
     @Test
     void shouldOpenSchedule() {
-        final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findById(schedule.getId())).thenReturn(Optional.of(schedule));
         Mockito.when(repository.save(schedule)).thenReturn(schedule);
@@ -120,7 +120,7 @@ class ScheduleServiceTest {
     @Test
     void shouldRegisterAssociateVote() {
         final Votes vote = new Votes("1234567", VoteEnum.SIM);
-        final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null);
+        final Schedule schedule = new Schedule("123","test", "testDesc", LocalDateTime.now(), null, null, null, false);
 
         Mockito.when(repository.findById(schedule.getId())).thenReturn(Optional.of(schedule));
         Mockito.when(repository.save(schedule)).thenReturn(schedule);

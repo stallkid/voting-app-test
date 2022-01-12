@@ -7,8 +7,9 @@ import com.cooperativism.voting.controller.response.VoteResponse;
 import com.cooperativism.voting.domain.Schedule;
 import com.cooperativism.voting.mapper.ScheduleMapper;
 import com.cooperativism.voting.mapper.VotesMapper;
-import com.cooperativism.voting.service.ScheduleService;
-import com.cooperativism.voting.service.VoteService;
+import com.cooperativism.voting.service.ScheduleServiceImpl;
+import com.cooperativism.voting.service.VoteServiceImpl;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,14 +25,15 @@ import java.util.List;
 public class ScheduleController {
 
     @Autowired
-    private ScheduleService service;
+    private ScheduleServiceImpl service;
     @Autowired
-    private VoteService voteService;
+    private VoteServiceImpl voteService;
     @Autowired
     private ScheduleMapper mapper;
     @Autowired
     private VotesMapper votesMapper;
 
+    @ApiOperation(value = "Cria uma pauta", response = Schedule.class)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Schedule> createSchedule(@Valid @RequestBody final ScheduleRequest request) {
@@ -40,6 +42,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedule);
     }
 
+    @ApiOperation(value = "Abre uma pauta com a data de finalização das votações")
     @PostMapping(value = "/open", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> openScheduleSession(
@@ -50,6 +53,7 @@ public class ScheduleController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Busca todas as pautas", response = Schedule.class)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Schedule>> getAllSchedules() {
         log.info("Starting to fetch all Schedules");
@@ -57,6 +61,7 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedules);
     }
 
+    @ApiOperation(value = "Busca a pauta pelo nome", response = Schedule.class)
     @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Schedule> getScheduleByName(@PathVariable final String name) {
         log.info("Starting to fetch schedule by name: {}", name);
@@ -64,16 +69,18 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedule);
     }
 
+    @ApiOperation(value = "Atualiza a pauta usando o ID", response = Schedule.class)
     @PutMapping(value = "/{id}")
     public ResponseEntity<Schedule> updateSchedule(
             @PathVariable final String id,
             @RequestBody final ScheduleRequest scheduleRequest
     ) {
-        log.info("Starting to update Schedule with Id: {}", id);
+        log.info("Starting to update Schedule with scheduleId: {}", id);
         Schedule schedule = service.updateSchedule(mapper.toSchedule(scheduleRequest), id);
         return ResponseEntity.ok().body(schedule);
     }
 
+    @ApiOperation(value = "Deleta a pauta pelo ID")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteSchedule( @PathVariable final String id) {
         log.info("Starting to delete the Schedule with Id: {}", id);
@@ -81,6 +88,7 @@ public class ScheduleController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Registra o voto na pauta")
     @PostMapping(value = "/vote",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> voteOnScheduleSession(
@@ -91,6 +99,7 @@ public class ScheduleController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Busca a contagem dos votos da pauta pelo Id")
     @GetMapping(value = "/vote/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VoteResponse> votesCount(@PathVariable String id) {
         VoteResponse voteResponse = service.countingVotes(id);

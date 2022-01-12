@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class VoteResponse {
-    private Integer totalVotesCount;
-    private Integer totalVotesForYesCount;
-    private Integer totalVotesForNoCount;
+    private Long totalVotesCount;
+    private Long totalVotesForYesCount;
+    private Long totalVotesForNoCount;
 }
