@@ -21,10 +21,10 @@ public class VoteServiceImpl implements VoteService {
 
     public void voteForSchedule(final String scheduleId, final Votes vote) {
         Schedule schedule = scheduleService.getScheduleById(scheduleId);
-        int result = schedule.getEndDate().compareTo(LocalDateTime.now());
+        int endDateComparison = schedule.getEndDate().compareTo(LocalDateTime.now());
         CpfValidatorResponse cpfIsValid = cpfValidator.validateCpf(vote.getCpf());
         if (cpfIsValid.equals(CpfValidatorEnum.UNABLE_TO_VOTE)) throw new DataIntegrityException("Unable to vote");
-        if (result < 0) throw new DataIntegrityException("Schedule session is closed");
+        if (endDateComparison < 0) throw new DataIntegrityException("Schedule session is closed");
         Boolean alreadyVoted =  schedule.getVotes() != null ? schedule.getVotes().stream()
             .anyMatch(votes -> vote.getCpf().equals(votes.getCpf())) : false;
         if (alreadyVoted) throw new DataIntegrityException("Schedule already has this vote");

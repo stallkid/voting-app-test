@@ -4,17 +4,12 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://mongo:123@localhost:27017/cooperativism-voting}
-#      host: ${DB-HOST:localhost}
-#      port: ${DB-PORT:27017}
-#      database: ${DB-NAME:cooperativism-voting}
-#      username: ${DB-USER:mongo}
-#      password: ${DB-PASSWORD:123}
       auto-index-creation: true
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBBITMQ_PASSWORD:guest}
     queue:
       name: closed-schedule-vote-results
 client:

@@ -92,7 +92,7 @@ public class ScheduleController {
     @PostMapping(value = "/vote",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> voteOnScheduleSession(
-            @RequestBody final VoteRequest request
+            @Valid @RequestBody final VoteRequest request
     ) {
         log.info("Associate started to voting: {}",request);
         voteService.voteForSchedule(request.getScheduleId(), votesMapper.toVotes(request));
