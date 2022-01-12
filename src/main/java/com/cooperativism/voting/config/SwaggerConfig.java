@@ -25,7 +25,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiEndPointInfo() {
-        Contact contact = new Contact("Renan Luis Bianchini", "https://www.unip.br", "ccunip@outlook.com.br");
+        Contact contact = new Contact("Renan Luis Bianchini", "https://renan-portfolio.netlify.app/about", "renan.bianchini@southsystem.com.br");
         return new ApiInfoBuilder().title("Desafio Técnico Backend - App de Votação")
                 .description("Esta Documentação abrange todas as APIs para o uso do projeto")
                 .contact(contact)

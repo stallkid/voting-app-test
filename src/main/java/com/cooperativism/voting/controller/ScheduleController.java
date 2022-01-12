@@ -61,11 +61,11 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedules);
     }
 
-    @ApiOperation(value = "Busca a pauta pelo nome", response = Schedule.class)
-    @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Schedule> getScheduleByName(@PathVariable final String name) {
-        log.info("Starting to fetch schedule by name: {}", name);
-        Schedule schedule = service.getScheduleByName(name);
+    @ApiOperation(value = "Busca a pauta pelo ID", response = Schedule.class)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Schedule> getScheduleByName(@PathVariable final String id) {
+        log.info("Starting to fetch schedule by id: {}", id);
+        Schedule schedule = service.getScheduleById(id);
         return ResponseEntity.ok().body(schedule);
     }
 

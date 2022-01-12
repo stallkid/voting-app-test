@@ -33,7 +33,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"teste endDate\",\r\n    \"description\": \"teste description\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Teste final\",\r\n    \"description\": \"teste final description\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,12 +41,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/schedule",
+					"raw": "http://localhost:8081/schedule",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"schedule"
 					]
@@ -118,12 +118,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/schedule/vote/{{scheduleId}}",
+					"raw": "http://localhost:8081/schedule/vote/{{scheduleId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"schedule",
 						"vote",

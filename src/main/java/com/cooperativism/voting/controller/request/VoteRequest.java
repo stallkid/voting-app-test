@@ -2,6 +2,7 @@ package com.cooperativism.voting.controller.request;
 
 import com.cooperativism.voting.domain.enums.VoteEnum;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,5 +16,6 @@ public class VoteRequest {
     @ApiModelProperty(notes = "CPF do colaborador", required = true)
     private String cpf;
     @ApiModelProperty(notes = "Voto do colaborador", required = true, allowableValues = "SIM/NAO")
+    @ApiParam(value = "O voto deve ser SIM ou NAO", required = true, allowableValues = "SIM/NAO")
     private VoteEnum vote;
 }
