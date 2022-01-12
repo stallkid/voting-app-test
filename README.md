@@ -12,11 +12,17 @@ Após a criação e abertura da Pauta, será possível realizar votações com C
 
 ## Escolhas tomadas durante o desenvolvimento
 A aplicação foi desenvolvida tendo em mente agilidade e performance, com Spring boot foi possível ter várias ferramentas prontas para o uso.
+
 No eco sistema do Spring a ferramenta mais utilizada foi o Spring Data, pois ele abstrai todas as funcionalidades do JPA Hibernate.
+
 Para o banco de dados foi escolhido o MongoDB, por ser NoSQL não foi preciso um tempo maior para o desenho dos esquemas do banco de dados, assim ganhando bastante tempo em apenas desenhando o JSON pelo qual o Frontend utilizaria, alem da grande performance por não precisar fazer buscas e várias indexações durante o uso.
+
 A documentação foi feita com Swagger por ser uma lib bem robusta e ter uma ótima integração com o Springboot.
+
 A mensageria escolhida foi o RabbitMQ hospedado num servidor AWS por meio da plataforma CloudAMQP pelo fato de ser gratuito e não precisar utilizar o cartão de crédito.
+
 Para o versionamento da aplicação seria utilizado o git flow caso ouvesse um time maior, para ter um melhor controle nos merges, mas para focar na agilidade foi feito apenas commits únicos por funcionalidades aplicadas diretamente na branch main.
+
 Visando uma maior qualidade de código, foi também criado testes unitários nos serviços para garantir que a aplicação mantenha suas regras de negócio funcionando de maneira esperada.
 
 ## Stack de tecnologias
