@@ -12,6 +12,9 @@ Após a criação e abertura da Pauta, será possível realizar votações com C
 
 ## Stack de tecnologias
 Para o desenvolvimento foi utilizado as seguintes tecnologias
-- Spring boot 2.4.3
-- MongoDB 4.4
-- CloudAMQP
+- [Spring boot](https://spring.io/projects/spring-boot) 2.4.3
+- [MongoDB](https://www.mongodb.com/) 4.4
+- [CloudAMQP](https://www.cloudamqp.com/)
+
+### Links para a aplicação
+[https://coop-voting-app.herokuapp.com/swagger-ui.html](https://coop-voting-app.herokuapp.com/swagger-ui.html)
