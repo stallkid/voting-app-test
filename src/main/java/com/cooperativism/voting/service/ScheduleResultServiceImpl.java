@@ -29,7 +29,7 @@ public class ScheduleResultServiceImpl implements ScheduleResultService {
 
     @Scheduled(fixedRate = 5000)
     public void sendVoteResultToTheQueue() {
-        var schedules = repository.findAll();
+        var schedules = repository.findAllClosedScheduleToSendToQueue();
         log.info("Iniciando a verificação das Pautas fechadas");
         schedules.stream()
                 .forEach( schedule -> {
