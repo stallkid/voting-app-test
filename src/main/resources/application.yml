@@ -7,6 +7,7 @@ spring:
       auto-index-creation: true
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
+    virtual-host: ${RABBITMQ_VHOST}
     port: ${RABBITMQ_PORT:5672}
     username: ${RABBITMQ_USERNAME:guest}
     password: ${RABBBITMQ_PASSWORD:guest}
