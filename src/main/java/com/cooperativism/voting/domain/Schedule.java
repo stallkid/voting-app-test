@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Document
+@CompoundIndex(name = "id_cpf", def = "{'id': 1, 'votes.cpf': 1}")
 public class Schedule {
     @Id
     @ApiModelProperty(notes = "ID da Pauta", required = true)
