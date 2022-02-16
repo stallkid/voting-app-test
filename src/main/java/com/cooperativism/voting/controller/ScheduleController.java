@@ -25,11 +25,11 @@ import java.util.List;
 public class ScheduleController {
 
     @Autowired
-    private ScheduleServiceImpl service;
+    private ScheduleServiceImpl scheduleService;
     @Autowired
     private VoteServiceImpl voteService;
     @Autowired
-    private ScheduleMapper mapper;
+    private ScheduleMapper scheduleMapper;
     @Autowired
     private VotesMapper votesMapper;
 
@@ -38,7 +38,7 @@ public class ScheduleController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Schedule> createSchedule(@Valid @RequestBody final ScheduleRequest request) {
         log.info("Creating schedule with Request: {}",request);
-        Schedule schedule = service.createSchedule(mapper.toSchedule(request));
+        Schedule schedule = scheduleService.createSchedule(scheduleMapper.toSchedule(request));
         return ResponseEntity.ok().body(schedule);
     }
 
@@ -49,7 +49,7 @@ public class ScheduleController {
             @Valid @RequestBody final OpenScheduleRequest request
     ) {
         log.info("Opening Schedule to vote: {}", request);
-        service.openSchedule(mapper.toSchedule(request), request.getScheduleId());
+        scheduleService.openSchedule(scheduleMapper.toSchedule(request), request.getScheduleId());
         return ResponseEntity.noContent().build();
     }
 
@@ -57,7 +57,7 @@ public class ScheduleController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Schedule>> getAllSchedules() {
         log.info("Starting to fetch all Schedules");
-        List<Schedule> schedules = service.getAllSchedules();
+        List<Schedule> schedules = scheduleService.getAllSchedules();
         return ResponseEntity.ok().body(schedules);
     }
 
@@ -65,7 +65,7 @@ public class ScheduleController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Schedule> getScheduleByName(@PathVariable final String id) {
         log.info("Starting to fetch schedule by id: {}", id);
-        Schedule schedule = service.getScheduleById(id);
+        Schedule schedule = scheduleService.getScheduleById(id);
         return ResponseEntity.ok().body(schedule);
     }
 
@@ -76,7 +76,7 @@ public class ScheduleController {
             @RequestBody final ScheduleRequest scheduleRequest
     ) {
         log.info("Starting to update Schedule with scheduleId: {}", id);
-        Schedule schedule = service.updateSchedule(mapper.toSchedule(scheduleRequest), id);
+        Schedule schedule = scheduleService.updateSchedule(scheduleMapper.toSchedule(scheduleRequest), id);
         return ResponseEntity.ok().body(schedule);
     }
 
@@ -84,7 +84,7 @@ public class ScheduleController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteSchedule( @PathVariable final String id) {
         log.info("Starting to delete the Schedule with Id: {}", id);
-        service.deleteSchedule(id);
+        scheduleService.deleteSchedule(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -102,7 +102,7 @@ public class ScheduleController {
     @ApiOperation(value = "Busca a contagem dos votos da pauta pelo Id")
     @GetMapping(value = "/vote/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VoteResponse> votesCount(@PathVariable String id) {
-        VoteResponse voteResponse = service.countingVotes(id);
+        VoteResponse voteResponse = scheduleService.countingVotes(id);
         return ResponseEntity.ok().body(voteResponse);
     }
 }

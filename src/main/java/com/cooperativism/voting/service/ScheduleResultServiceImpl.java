@@ -16,28 +16,28 @@ import java.time.LocalDateTime;
 public class ScheduleResultServiceImpl implements ScheduleResultService {
 
     @Autowired
-    private ScheduleRepository repository;
+    private ScheduleRepository scheduleRepository;
 
     @Autowired
-    private VoteResultQueueProducer producer;
+    private VoteResultQueueProducer voteResultQueueProducer;
 
     @Autowired
-    private VoteResultMessageMapper mapper;
+    private VoteResultMessageMapper voteResultMessageMapper;
 
     @Autowired
     private ScheduleServiceImpl scheduleService;
 
     @Scheduled(fixedRate = 5000)
     public void sendVoteResultToTheQueue() {
-        var schedules = repository.findAllClosedScheduleToSendToQueue();
+        var schedules = scheduleRepository.findAllClosedScheduleToSendToQueue();
         schedules.stream()
             .forEach( schedule -> {
                 if (checkDataToSendMesssage(schedule)) {
-                    var voteResultMessage = mapper.toVoteResultMessageResponse(schedule);
+                    var voteResultMessage = voteResultMessageMapper.toVoteResultMessageResponse(schedule);
                     log.info("Enviando para a fila a Pauta: {}", voteResultMessage);
-                    producer.send(voteResultMessage.toString());
+                    voteResultQueueProducer.send(voteResultMessage.toString());
                     schedule.setStatus(true);
-                    repository.save(schedule);
+                    scheduleRepository.save(schedule);
                 }
             });
     }
@@ -48,7 +48,6 @@ public class ScheduleResultServiceImpl implements ScheduleResultService {
         boolean nullAndStatusFalse = schedule.getStatus() == null || !schedule.getStatus();
         boolean scheduleIsClosed = endDateComparison < 0;
         boolean scheduleHasVotes = schedule.getVoteResults() != null;
-        if (nullAndStatusFalse && scheduleIsClosed && scheduleHasVotes) return true;
-        return false;
+        return nullAndStatusFalse && scheduleIsClosed && scheduleHasVotes;
     }
 }
