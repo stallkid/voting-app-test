@@ -33,7 +33,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
         body.put("message", e.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ScheduleNotFoundException.class)
